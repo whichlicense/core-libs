@@ -82,7 +82,12 @@ publishing {
 }
 
 signing {
-    sign(publishing.publications["versioning"])
+    if (project.hasProperty("CI")) {
+        val signingKey = System.getenv("PKG_SIGNING_KEY")
+        val signingPassword = System.getenv("PKG_SIGNING_PW")
+        useInMemoryPgpKeys(signingKey, signingPassword)
+        sign(publishing.publications["versioning"])
+    }
 }
 
 tasks.javadoc {
