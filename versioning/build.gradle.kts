@@ -11,14 +11,20 @@ plugins {
 }
 
 group = "com.whichlicense"
-version = "0.0.0"
+version = "0.0.0-SNAPSHOT"
 
 java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(19))
+    }
     withJavadocJar()
     withSourcesJar()
 }
 
 repositories {
+    maven {
+        url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots")
+    }
     mavenCentral()
 }
 
@@ -27,8 +33,13 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
 
+tasks.withType<JavaCompile> {
+    options.compilerArgs.add("--enable-preview")
+}
+
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
+    jvmArgs("--enable-preview")
 }
 
 publishing {
@@ -74,8 +85,18 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/whichlicense/core-libs")
             credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.token") as String? ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
+        maven {
+            name = "OSSRH"
+            url = uri(if ((project.version as String).endsWith("SNAPSHOT"))
+                "https://s01.oss.sonatype.org/content/repositories/snapshots/" else
+                "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = project.findProperty("ossrh.user") as String? ?: System.getenv("OSSRH_USER")
+                password = project.findProperty("ossrh.pw") as String? ?: System.getenv("OSSRH_PW")
             }
         }
     }
@@ -83,8 +104,8 @@ publishing {
 
 signing {
     if (project.hasProperty("CI")) {
-        val signingKey = System.getenv("PKG_SIGNING_KEY")
-        val signingPassword = System.getenv("PKG_SIGNING_PW")
+        val signingKey = project.findProperty("signing.key") as String? ?: System.getenv("PKG_SIGNING_KEY")
+        val signingPassword = project.findProperty("signing.pw") as String? ?: System.getenv("PKG_SIGNING_PW")
         useInMemoryPgpKeys(signingKey, signingPassword)
         sign(publishing.publications["versioning"])
     }
