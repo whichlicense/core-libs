@@ -8,7 +8,31 @@ package com.whichlicense.metadata.seeker;
 
 import java.nio.file.Path;
 
-public interface MetadataMatch {
+/**
+ * A sealed interface that represents a match of metadata information.
+ *
+ * @author David Greven
+ * @version 0
+ * @since 0.0.0
+ */
+public sealed interface MetadataMatch {
+    /**
+     * Returns the metadata seeker associated with this metadata match.
+     *
+     * @return The metadata seeker as a MetadataSeeker instance.
+     * @since 0.0.0
+     */
     MetadataSeeker seeker();
-    record FileMatch(Path relativePath, MetadataSeeker seeker) implements MetadataMatch {}
+
+    /**
+     * A record that represents a metadata match for a file.
+     *
+     * @param relativePath the relative path of the matched file
+     * @param seeker       the metadata seeker associated with this metadata match
+     * @author David Greven
+     * @version 0
+     * @since 0.0.0
+     */
+    record FileMatch(Path relativePath, MetadataSeeker seeker) implements MetadataMatch {
+    }
 }

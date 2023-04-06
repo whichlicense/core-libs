@@ -6,6 +6,13 @@
  */
 package com.whichlicense.metadata.seeker;
 
+/**
+ * An enumeration that represents the source types of metadata.
+ *
+ * @author David Greven
+ * @version 0
+ * @since 0.0.0
+ */
 public enum MetadataSourceType {
     FILE
 }
