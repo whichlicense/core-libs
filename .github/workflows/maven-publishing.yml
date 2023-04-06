@@ -19,7 +19,10 @@ permissions:
 
 jobs:
   publish:
+    strategy:
+      matrix:
+        directory: [ versioning, seeker ]
     uses: whichlicense/.github/.github/workflows/maven-publishing.yml@main
     with:
-      root-directory: ./versioning
+      root-directory: ${{ matrix.directory }}
     secrets: inherit
