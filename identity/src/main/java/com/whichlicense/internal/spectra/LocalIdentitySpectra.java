@@ -24,7 +24,7 @@ public final class LocalIdentitySpectra {
     /**
      * Internal constructor to prevent instantiation of the LocalIdentitySpectra
      * class.
-     * </br>
+     *
      * <p>The LocalIdentitySpectra class only contains static methods and should
      * not be instantiated.</p>
      *

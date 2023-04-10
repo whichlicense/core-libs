@@ -18,7 +18,6 @@ import static java.lang.System.currentTimeMillis;
  * maintain rough time ordering, be language and tooling agnostic for lossless encoding and
  * decoding, and allow for performant decomposition into the material used to generate the
  * ID while also fitting in a 64-bit number.
- * </br>
  *
  * <p>Every generated identity spectra are composed of the following material (components):</p>
  * <ul>
@@ -38,7 +37,7 @@ public final class Identity {
 
     /**
      * Internal constructor to prevent instantiation of the Identity class.
-     * </br>
+     *
      * <p>The Identity class only contains static methods and should not be instantiated.</p>
      *
      * @throws UnsupportedOperationException if attempted to be instantiated
