@@ -14,5 +14,5 @@ package com.whichlicense.metadata.seeker;
  * @since 0.0.0
  */
 public enum MetadataSourceType {
-    FILE
+    FILE, DIRECTORY
 }
