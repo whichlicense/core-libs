@@ -12,3 +12,7 @@ updates:
     directory: "/seeker/"
     schedule:
       interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/identity/"
+    schedule:
+      interval: "daily"
