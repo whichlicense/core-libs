@@ -19,32 +19,32 @@ public sealed interface MetadataMatch {
     /**
      * Returns the metadata seeker associated with this metadata match.
      *
-     * @return The metadata seeker as a MetadataSeeker instance.
+     * @return The metadata seeker class.
      * @since 0.0.0
      */
-    Class<MetadataSeeker> seeker();
+    Class<? extends MetadataSeeker> seeker();
 
     /**
      * A record that represents a metadata match for a file.
      *
      * @param relativePath the relative path of the matched file
-     * @param seeker       the metadata seeker associated with this metadata match
+     * @param seeker       the metadata seeker class associated with this metadata match
      * @author David Greven
      * @version 0
      * @since 0.0.0
      */
-    record FileMatch(Path relativePath, Class<MetadataSeeker> seeker) implements MetadataMatch {
+    record FileMatch(Path relativePath, Class<? extends MetadataSeeker> seeker) implements MetadataMatch {
     }
 
     /**
      * A record that represents a metadata match for a directory.
      *
      * @param relativePath the relative path of the matched directory
-     * @param seeker       the metadata seeker associated with this metadata match
+     * @param seeker       the metadata seeker class associated with this metadata match
      * @author David Greven
      * @version 0
      * @since 0.0.0
      */
-    record DirectoryMatch(Path relativePath, Class<MetadataSeeker> seeker) implements MetadataMatch {
+    record DirectoryMatch(Path relativePath, Class<? extends MetadataSeeker> seeker) implements MetadataMatch {
     }
 }
