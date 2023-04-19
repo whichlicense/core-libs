@@ -14,4 +14,22 @@ package com.whichlicense.versioning;
  * @since 0.0.0
  */
 public interface VersionScheme {
+    int STANDARDIZED = 1;
+    int PROPRIETARY = 0;
+
+    /**
+     * @param version
+     * @return
+     */
+    Version parse(String version) throws VersionFormatException;
+
+    /**
+     * @param version
+     * @return
+     */
+    boolean matches(String version);
+
+    default int priority() {
+        return PROPRIETARY;
+    }
 }

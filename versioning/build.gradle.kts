@@ -14,6 +14,10 @@ group = "com.whichlicense"
 version = "0.0.0"
 
 java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(19))
+        vendor.set(JvmVendorSpec.AZUL)
+    }
     withJavadocJar()
     withSourcesJar()
 }
@@ -24,11 +28,18 @@ repositories {
 
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
+    testImplementation("org.assertj:assertj-core:3.11.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.add("--enable-preview")
 }
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
+    jvmArgs("--enable-preview")
 }
 
 publishing {
