@@ -16,3 +16,7 @@ updates:
     directory: "/identity/"
     schedule:
       interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/logging/"
+    schedule:
+      interval: "daily"
