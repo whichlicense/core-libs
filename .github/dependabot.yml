@@ -20,3 +20,7 @@ updates:
     directory: "/logging/"
     schedule:
       interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/sourcing/"
+    schedule:
+      interval: "daily"
