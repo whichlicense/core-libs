@@ -6,9 +6,9 @@
  */
 package com.whichlicense.metadata.sourcing.artifact.zip;
 
-import com.whichlicense.metadata.sourcing.FileReferenceSource;
-import com.whichlicense.metadata.sourcing.MetadataOrigin;
+import com.whichlicense.metadata.sourcing.MetadataOrigin.RawPath;
 import com.whichlicense.metadata.sourcing.MetadataSourceResolver;
+import com.whichlicense.testing.fileref.FileReferenceSource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 
@@ -53,6 +53,6 @@ class ZipMetadataSourceResolverTest {
     @ParameterizedTest
     @FileReferenceSource(path = "/some.jar")
     void givenZipMetadataSourceResolverWhenCallingHandleWithZipFilePathThenJarMetadataSourceShouldBeReturned(Path path) {
-        assertThat(RESOLVER.handle(path)).extracting("origin").isEqualTo(new MetadataOrigin.RawPath(path));
+        assertThat(RESOLVER.handle(path)).extracting("origin").isEqualTo(new RawPath(path));
     }
 }

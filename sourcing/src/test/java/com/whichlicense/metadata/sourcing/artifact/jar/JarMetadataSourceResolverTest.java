@@ -6,9 +6,9 @@
  */
 package com.whichlicense.metadata.sourcing.artifact.jar;
 
-import com.whichlicense.metadata.sourcing.FileReferenceSource;
 import com.whichlicense.metadata.sourcing.MetadataOrigin.RawPath;
 import com.whichlicense.metadata.sourcing.MetadataSourceResolver;
+import com.whichlicense.testing.fileref.FileReferenceSource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 

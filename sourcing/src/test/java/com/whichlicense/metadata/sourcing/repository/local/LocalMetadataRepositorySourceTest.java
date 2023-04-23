@@ -6,7 +6,10 @@
  */
 package com.whichlicense.metadata.sourcing.repository.local;
 
+import com.whichlicense.metadata.sourcing.MetadataOrigin;
+import com.whichlicense.metadata.sourcing.MetadataOrigin.RawPath;
 import com.whichlicense.testing.nullable.NullSubstituteSource;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 
@@ -17,12 +20,18 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LocalMetadataRepositorySourceTest {
     static final Path PATH = Paths.get(".");
-    static final Arguments ARGS = Arguments.of(PATH);
+    static final Arguments ARGS = Arguments.of(PATH, new RawPath(PATH));
+
+    @Test
+    void givenNullableArgumentWhenCallingTheConstructorThenThrowNullPointerException() {
+        assertThatThrownBy(() -> new LocalMetadataRepositorySource(null))
+                .isExactlyInstanceOf(NullPointerException.class);
+    }
 
     @ParameterizedTest
     @NullSubstituteSource("ARGS")
-    void givenNullableArgumentsWhenCallingTheConstructorThenThrowNullPointerException(Path path) {
-        assertThatThrownBy(() -> new LocalMetadataRepositorySource(path))
+    void givenNullableArgumentsWhenCallingTheConstructorThenThrowNullPointerException(Path path, MetadataOrigin origin) {
+        assertThatThrownBy(() -> new LocalMetadataRepositorySource(path, origin))
                 .isExactlyInstanceOf(NullPointerException.class);
     }
 }

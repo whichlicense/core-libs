@@ -19,7 +19,7 @@ public record LocalMetadataRepositorySourceResolver(MetadataSourceResolver next)
     }
 
     @Override
-    public MetadataSource handle(Path path) throws UnsupportedOperationException {
+    public MetadataSource handle(Path path) {
         return new LocalMetadataRepositorySource(path);
     }
 }
