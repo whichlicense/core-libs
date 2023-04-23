@@ -16,7 +16,7 @@ import java.util.Objects;
 
 public record GitHubMetadataRepositorySource(String username, String repository, String commit, Path path, MetadataOrigin origin) implements MetadataRepositorySource {
     public GitHubMetadataRepositorySource(String username, String repository, String commit, Path path, URL url) {
-        this(username, repository, commit, path, new RawURL(url));
+        this(username, repository, commit, path, new RawURL(Objects.requireNonNull(url)));
     }
 
     public GitHubMetadataRepositorySource {

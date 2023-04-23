@@ -47,7 +47,7 @@ public record GitHubMetadataRepositorySourceResolver(MetadataSourceResolver next
         return Stream.of(url.getPath().split("/")).filter(p -> !p.isBlank());
     }
 
-    private boolean exists(String username, String repository) {
+    boolean exists(String username, String repository) {
         var logger = Logger.getLogger("whichlicense.sourcing.github");
         try {
             var api = new URL("https://api.github.com/repos/%s/%s".formatted(username, repository));
