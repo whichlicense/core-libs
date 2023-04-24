@@ -8,7 +8,6 @@
 import com.whichlicense.metadata.sourcing.MetadataSourceResolverProvider;
 import com.whichlicense.metadata.sourcing.artifact.jar.JarMetadataSourceResolverProvider;
 import com.whichlicense.metadata.sourcing.artifact.zip.ZipMetadataSourceResolverProvider;
-import com.whichlicense.metadata.sourcing.repository.github.GitHubMetadataRepositorySourceResolverProvider;
 import com.whichlicense.metadata.sourcing.repository.local.LocalMetadataRepositorySourceResolverProvider;
 
 module whichlicense.sourcing {
@@ -16,6 +15,6 @@ module whichlicense.sourcing {
     exports com.whichlicense.metadata.sourcing;
     exports com.whichlicense.metadata.sourcing.artifact;
     exports com.whichlicense.metadata.sourcing.repository;
-    provides MetadataSourceResolverProvider with JarMetadataSourceResolverProvider, ZipMetadataSourceResolverProvider, GitHubMetadataRepositorySourceResolverProvider, LocalMetadataRepositorySourceResolverProvider;
+    provides MetadataSourceResolverProvider with JarMetadataSourceResolverProvider, ZipMetadataSourceResolverProvider, LocalMetadataRepositorySourceResolverProvider;
     uses MetadataSourceResolverProvider;
 }
