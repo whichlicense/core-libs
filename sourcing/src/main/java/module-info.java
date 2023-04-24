@@ -15,6 +15,7 @@ module whichlicense.sourcing {
     exports com.whichlicense.metadata.sourcing;
     exports com.whichlicense.metadata.sourcing.artifact;
     exports com.whichlicense.metadata.sourcing.repository;
+    exports com.whichlicense.metadata.sourcing.internal to whichlicense.sourcing.github;
     provides MetadataSourceResolverProvider with JarMetadataSourceResolverProvider, ZipMetadataSourceResolverProvider, LocalMetadataRepositorySourceResolverProvider;
     uses MetadataSourceResolverProvider;
 }
