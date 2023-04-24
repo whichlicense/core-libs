@@ -35,8 +35,12 @@ configurations.all {
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
+    testImplementation("org.mockito:mockito-subclass:5.3.1")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.3.1")
     testImplementation("org.assertj:assertj-core:3.24.2")
     testImplementation("com.whichlicense.testing:naming:0.1.4-SNAPSHOT")
+    testImplementation("com.whichlicense.testing:fileref:0.1.4-SNAPSHOT")
+    testImplementation("com.whichlicense.testing:nullable:0.1.4-SNAPSHOT")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
 
@@ -51,8 +55,8 @@ tasks.getByName<Test>("test") {
 
 publishing {
     publications {
-        create<MavenPublication>("logging") {
-            artifactId = "logging"
+        create<MavenPublication>("sourcing") {
+            artifactId = "sourcing"
             from(components["java"])
             versionMapping {
                 usage("java-api") {
@@ -63,9 +67,9 @@ publishing {
                 }
             }
             pom {
-                name.set("WhichLicense core-libs/logging")
-                description.set("This library provides the WhichLicense logging configuration.")
-                url.set("https://github.com/whichlicense/core-libs/logging")
+                name.set("WhichLicense core-libs/sourcing")
+                description.set("This library provides the MetadataSourceResolverProvider SPI interface to facilitate metadata sourcing.")
+                url.set("https://github.com/whichlicense/core-libs/sourcing")
                 licenses {
                     license {
                         name.set("The Apache License, Version 2.0")
@@ -114,7 +118,7 @@ signing {
         val signingKey = System.getenv("PKG_SIGNING_KEY")
         val signingPassword = System.getenv("PKG_SIGNING_PW")
         useInMemoryPgpKeys(signingKey, signingPassword)
-        sign(publishing.publications["logging"])
+        sign(publishing.publications["sourcing"])
     }
 }
 
