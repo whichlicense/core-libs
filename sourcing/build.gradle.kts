@@ -68,7 +68,7 @@ publishing {
             }
             pom {
                 name.set("WhichLicense core-libs/sourcing")
-                description.set("This library provides the MetadataSourceProcessorProvider SPI interface to facilitate metadata sourcing.")
+                description.set("This library provides the MetadataSourceResolverProvider SPI interface to facilitate metadata sourcing.")
                 url.set("https://github.com/whichlicense/core-libs/sourcing")
                 licenses {
                     license {
