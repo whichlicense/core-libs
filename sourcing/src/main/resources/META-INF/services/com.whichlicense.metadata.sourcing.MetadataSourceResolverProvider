@@ -1,4 +1,3 @@
 com.whichlicense.metadata.sourcing.artifact.jar.JarMetadataSourceResolverProvider
 com.whichlicense.metadata.sourcing.artifact.zip.ZipMetadataSourceResolverProvider
-com.whichlicense.metadata.sourcing.repository.github.GitHubMetadataRepositorySourceResolverProvider
 com.whichlicense.metadata.sourcing.repository.local.LocalMetadataRepositorySourceResolverProvider
