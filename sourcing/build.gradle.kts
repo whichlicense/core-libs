@@ -38,9 +38,9 @@ dependencies {
     testImplementation("org.mockito:mockito-subclass:5.3.1")
     testImplementation("org.mockito:mockito-junit-jupiter:5.3.1")
     testImplementation("org.assertj:assertj-core:3.24.2")
-    testImplementation("com.whichlicense.testing:naming:0.1.6-SNAPSHOT")
-    testImplementation("com.whichlicense.testing:fileref:0.1.6-SNAPSHOT")
-    testImplementation("com.whichlicense.testing:nullable:0.1.6-SNAPSHOT")
+    testImplementation("com.whichlicense.testing:naming:0.2.0-SNAPSHOT")
+    testImplementation("com.whichlicense.testing:fileref:0.2.0-SNAPSHOT")
+    testImplementation("com.whichlicense.testing:nullable:0.2.0-SNAPSHOT")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
 }
 
