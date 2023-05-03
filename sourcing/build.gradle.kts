@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.whichlicense"
-version = "0.1.9-SNAPSHOT"
+version = "0.2.0-SNAPSHOT"
 
 java {
     toolchain {
