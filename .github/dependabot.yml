@@ -24,3 +24,7 @@ updates:
     directory: "/sourcing/"
     schedule:
       interval: "daily"
+  - package-ecosystem: "gradle"
+    directory: "/problem/"
+    schedule:
+      interval: "daily"
