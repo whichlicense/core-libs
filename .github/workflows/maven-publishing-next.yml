@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 #
-name: Maven Publishing
+name: Maven Publishing Next
 
 on:
   workflow_dispatch:
@@ -21,8 +21,8 @@ jobs:
   publish:
     strategy:
       matrix:
-        directory: [ versioning, seeker, identity, logging, sourcing ]
-    uses: whichlicense/.github/.github/workflows/maven-publishing.yml@main
+        directory: [ problem ]
+    uses: whichlicense/.github/.github/workflows/maven-publishing-next.yml@main
     with:
       root-directory: ${{ matrix.directory }}
     secrets: inherit
