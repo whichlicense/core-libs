@@ -6,4 +6,5 @@
  */
 module whichlicense.foreign {
     requires java.logging;
+    exports com.whichlicense.foreign;
 }
