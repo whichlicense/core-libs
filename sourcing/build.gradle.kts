@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.whichlicense"
-version = "0.2.0-SNAPSHOT"
+version = "0.6.4-SNAPSHOT"
 
 java {
     toolchain {
@@ -33,7 +33,7 @@ configurations.all {
 }
 
 dependencies {
-    api("org.apache.commons:commons-vfs2:2.9.0")
+    api("org.apache.commons:commons-compress:1.23.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
     testImplementation("org.mockito:mockito-subclass:5.3.1")
