@@ -52,7 +52,7 @@ class JarMetadataSourceResolverTest {
 
     @ParameterizedTest
     @FileReferenceSource(path = "/some.jar")
-    void givenJarMetadataSourceResolverWhenCallingHandleWithJarFilePathThenJarMetadataSourceShouldBeReturned(Path path) {
+    void givenJarMetadataSourceResolverWhenCallingHandleWithJarFilePathThenJarMetadataOriginShouldBeReturned(Path path) {
         assertThat(RESOLVER.handle(path)).extracting("origin").isEqualTo(new RawPath(path));
     }
 }

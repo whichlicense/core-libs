@@ -11,11 +11,11 @@ plugins {
 }
 
 group = "com.whichlicense"
-version = "0.2.0-SNAPSHOT"
+version = "0.6.2-SNAPSHOT"
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(19))
+        languageVersion.set(JavaLanguageVersion.of(20))
     }
     withJavadocJar()
     withSourcesJar()
@@ -33,15 +33,10 @@ configurations.all {
 }
 
 dependencies {
-    api("org.apache.commons:commons-vfs2:2.9.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
-    testImplementation("org.mockito:mockito-subclass:5.3.1")
-    testImplementation("org.mockito:mockito-junit-jupiter:5.3.1")
     testImplementation("org.assertj:assertj-core:3.24.2")
     testImplementation("com.whichlicense.testing:naming:0.2.0-SNAPSHOT")
-    testImplementation("com.whichlicense.testing:fileref:0.2.0-SNAPSHOT")
-    testImplementation("com.whichlicense.testing:nullable:0.2.0-SNAPSHOT")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
 }
 
@@ -56,8 +51,8 @@ tasks.getByName<Test>("test") {
 
 publishing {
     publications {
-        create<MavenPublication>("sourcing") {
-            artifactId = "sourcing"
+        create<MavenPublication>("foreign") {
+            artifactId = "foreign"
             from(components["java"])
             versionMapping {
                 usage("java-api") {
@@ -68,9 +63,9 @@ publishing {
                 }
             }
             pom {
-                name.set("WhichLicense core-libs/sourcing")
-                description.set("This library provides the MetadataSourceResolverProvider SPI interface to facilitate metadata sourcing.")
-                url.set("https://github.com/whichlicense/core-libs/sourcing")
+                name.set("WhichLicense core-libs/foreign")
+                description.set("This library provides the ForeignRuntimeHelper utility class.")
+                url.set("https://github.com/whichlicense/core-libs/foreign")
                 licenses {
                     license {
                         name.set("The Apache License, Version 2.0")
@@ -119,7 +114,7 @@ signing {
         val signingKey = System.getenv("PKG_SIGNING_KEY")
         val signingPassword = System.getenv("PKG_SIGNING_PW")
         useInMemoryPgpKeys(signingKey, signingPassword)
-        sign(publishing.publications["sourcing"])
+        sign(publishing.publications["foreign"])
     }
 }
 

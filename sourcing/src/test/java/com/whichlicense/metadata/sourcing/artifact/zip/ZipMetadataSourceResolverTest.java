@@ -51,8 +51,8 @@ class ZipMetadataSourceResolverTest {
     }
 
     @ParameterizedTest
-    @FileReferenceSource(path = "/some.jar")
-    void givenZipMetadataSourceResolverWhenCallingHandleWithZipFilePathThenJarMetadataSourceShouldBeReturned(Path path) {
+    @FileReferenceSource(path = "/some.zip")
+    void givenZipMetadataSourceResolverWhenCallingHandleWithZipFilePathThenZipMetadataOriginShouldBeReturned(Path path) {
         assertThat(RESOLVER.handle(path)).extracting("origin").isEqualTo(new RawPath(path));
     }
 }
