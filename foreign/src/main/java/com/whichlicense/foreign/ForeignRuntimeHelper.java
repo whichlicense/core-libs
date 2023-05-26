@@ -21,18 +21,18 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.nio.file.StandardOpenOption.READ;
 
 public final class ForeignRuntimeHelper {
-    static <T> T requireNonNull(T obj, String symbolName) {
+    public static <T> T requireNonNull(T obj, String symbolName) {
         if (obj == null) {
             throw new UnsatisfiedLinkError("unresolved symbol: " + symbolName);
         }
         return obj;
     }
 
-    static MemorySegment asArray(MemorySegment addr, MemoryLayout layout, long numElements, SegmentScope scope) {
+    public static MemorySegment asArray(MemorySegment addr, MemoryLayout layout, long numElements, SegmentScope scope) {
         return MemorySegment.ofAddress(addr.address(), numElements * layout.byteSize(), scope);
     }
 
-    private static void loadLibrary(ClassLoader loader, String name) {
+    public static void loadLibrary(ClassLoader loader, String name) {
         var os = lookupOS();
         var arch = System.getProperty("os.arch");
         var extension = lookupLibraryExtension(os);
