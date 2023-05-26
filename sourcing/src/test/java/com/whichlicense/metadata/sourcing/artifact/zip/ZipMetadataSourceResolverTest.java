@@ -50,6 +50,11 @@ class ZipMetadataSourceResolverTest {
         assertThat(RESOLVER.handles(new URL("https://example.com/some.jar"))).isFalse();
     }
 
+    @Test
+    void givenZipMetadataSourceResolverWhenCallingHandlesWithTopLevelZipDomainBasedUrlThenFalseShouldBeReturned() throws MalformedURLException {
+        assertThat(RESOLVER.handles(new URL("https://example.zip"))).isFalse();
+    }
+
     @ParameterizedTest
     @FileReferenceSource(path = "/some.zip")
     void givenZipMetadataSourceResolverWhenCallingHandleWithZipFilePathThenZipMetadataOriginShouldBeReturned(Path path) {

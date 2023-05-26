@@ -24,7 +24,7 @@ public record ZipMetadataSourceResolver(MetadataSourceResolver next) implements 
 
     @Override
     public boolean handles(URL url) {
-        return url.toString().endsWith(".zip");
+        return url.toString().endsWith(".zip") && !url.getHost().endsWith(".zip");
     }
 
     @Override
