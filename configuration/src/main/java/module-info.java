@@ -4,4 +4,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-package com.whichlicense.metadata.model.configuration;
+
+module configuration.configuration {
+    exports com.whichlicense.configuration;
+}

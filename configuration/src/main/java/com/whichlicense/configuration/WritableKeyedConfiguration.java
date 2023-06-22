@@ -4,7 +4,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-package com.whichlicense.metadata.model.configuration;
+package com.whichlicense.configuration;
 
 public sealed interface WritableKeyedConfiguration permits KeyedConfiguration {
     void setBoolean(String key, boolean value);

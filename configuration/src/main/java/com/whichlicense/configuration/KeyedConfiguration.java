@@ -4,10 +4,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-package com.whichlicense.metadata.model.configuration;
-
-import com.whichlicense.metadata.model.configuration.ReadableKeyedConfiguration;
-import com.whichlicense.metadata.model.configuration.WritableKeyedConfiguration;
+package com.whichlicense.configuration;
 
 public non-sealed interface KeyedConfiguration extends ReadableKeyedConfiguration, WritableKeyedConfiguration {
 }

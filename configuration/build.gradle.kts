@@ -57,8 +57,8 @@ tasks.withType<Javadoc> {
 
 publishing {
     publications {
-        create<MavenPublication>("model") {
-            artifactId = "model"
+        create<MavenPublication>("configuration") {
+            artifactId = "configuration"
             from(components["java"])
             versionMapping {
                 usage("java-api") {
@@ -69,9 +69,9 @@ publishing {
                 }
             }
             pom {
-                name.set("WhichLicense core-libs/model")
+                name.set("WhichLicense core-libs/configuration")
                 description.set("This library provides the TODO")
-                url.set("https://github.com/whichlicense/core-libs/model")
+                url.set("https://github.com/whichlicense/core-libs/configuration")
                 licenses {
                     license {
                         name.set("The Apache License, Version 2.0")
@@ -120,7 +120,7 @@ signing {
         val signingKey = System.getenv("PKG_SIGNING_KEY")
         val signingPassword = System.getenv("PKG_SIGNING_PW")
         useInMemoryPgpKeys(signingKey, signingPassword)
-        sign(publishing.publications["model"])
+        sign(publishing.publications["configuration"])
     }
 }
 
