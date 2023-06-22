@@ -21,7 +21,7 @@ jobs:
   publish:
     strategy:
       matrix:
-        directory: [ versioning, seeker, identity, logging, sourcing, problem, foreign, model, identification ]
+        directory: [ versioning, seeker, identity, logging, sourcing, problem, foreign, model, identification, configuration ]
     uses: whichlicense/.github/.github/workflows/maven-publishing.yml@main
     with:
       root-directory: ${{ matrix.directory }}
