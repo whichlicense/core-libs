@@ -45,6 +45,7 @@ class ZipMetadataSourceResolverTest {
     @Test
     void givenZipMetadataSourceResolverWhenCallingHandlesWithZipUrlThenTrueShouldBeReturned() throws MalformedURLException {
         assertThat(RESOLVER.handles(new URL("https://example.com/some.zip"), CONFIG)).isTrue();
+        assertThat(RESOLVER.handles(new URL("https://github.com/whichlicense/frontend/archive/refs/heads/main.zip"), CONFIG)).isTrue();
     }
 
     @Test
