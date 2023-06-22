@@ -8,8 +8,7 @@ package com.whichlicense.metadata.model.exporter;
 
 import com.whichlicense.metadata.model.Metadata;
 import com.whichlicense.metadata.model.algebra.MetadataSink;
-import com.whichlicense.metadata.model.configuration.ReadableKeyedConfiguration;
 
 public interface MetadataExporter<T, A extends Metadata & MetadataExporter<T, A>> extends MetadataSink<A> {
-    T export(ReadableKeyedConfiguration configuration);
+    T export();
 }

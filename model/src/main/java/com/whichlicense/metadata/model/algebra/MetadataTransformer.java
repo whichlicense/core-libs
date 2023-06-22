@@ -22,14 +22,7 @@ public abstract class MetadataTransformer<IA extends I, I extends Metadata, T ex
     private final Type inboundTypes, argsType, transformationType, outboundTypes, returnType;
     private final MethodHandle transformationMethod;
 
-    /*private static final Function<Class<?>, MethodType> SINK =
-            (genericType) -> MethodType.genericMethodType(1)
-                    .changeReturnType(Sink.class)
-                    .appendParameterTypes(Integer.class);*/
-
-
     public MetadataTransformer() throws NoSuchMethodException, IllegalAccessException {
-        //this.method = method;
         var superclass = getClass().getGenericSuperclass();
         inboundTypes = ((ParameterizedType) superclass).getActualTypeArguments()[0];
         argsType = ((ParameterizedType) superclass).getActualTypeArguments()[1];
@@ -45,18 +38,6 @@ public abstract class MetadataTransformer<IA extends I, I extends Metadata, T ex
         var methodType = MethodType.methodType(Void.TYPE, paramTypes);
         transformationMethod = MethodHandles.lookup().findSpecial((Class<?>) transformationType,
                 "licenseText", methodType, (Class<?>) transformationType);
-
-        /*var paramTypes = Stream.of(((Class<?>) argsType).getDeclaredMethods())
-                .filter(m -> Objects.equals(m.getName(), method))
-                .limit(1).map(Method::getParameterTypes)
-                .flatMap(Stream::of).toList();
-
-        System.out.println(paramTypes);
-        System.out.println(SINK.apply((Class<?>) returnType));*/
-
-        //MethodType.methodType(Void.class, paramTypes).changeReturnType())
-
-        //System.out.println(MethodType.methodType(, paramTypes));
     }
 
     private Class<?>[] algebraInterfaces() {
@@ -70,8 +51,6 @@ public abstract class MetadataTransformer<IA extends I, I extends Metadata, T ex
             }
         })).toArray(Class<?>[]::new);
     }
-
-    //abstract Sink<O> transform()
 
     @SuppressWarnings("unchecked")
     public IA into(OA sink) {

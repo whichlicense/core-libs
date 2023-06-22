@@ -9,13 +9,12 @@ package com.whichlicense.metadata.model.extractor;
 import com.whichlicense.metadata.model.Metadata;
 import com.whichlicense.metadata.model.Sink;
 import com.whichlicense.metadata.model.algebra.MetadataSource;
-import com.whichlicense.metadata.model.configuration.ReadableKeyedConfiguration;
 
 public interface MetadataExtractor<S, A extends Metadata> extends MetadataSource<S, A> {
-    Sink<? super A> extract(S source, ReadableKeyedConfiguration configuration);
+    Sink<? super A> extract(S source);
 
     @Override
-    default Sink<? super A> source(S source, ReadableKeyedConfiguration configuration) {
-        return extract(source, configuration);
+    default Sink<? super A> source(S source) {
+        return extract(source);
     }
 }

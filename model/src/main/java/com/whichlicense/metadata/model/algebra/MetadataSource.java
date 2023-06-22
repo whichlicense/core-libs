@@ -8,8 +8,7 @@ package com.whichlicense.metadata.model.algebra;
 
 import com.whichlicense.metadata.model.Metadata;
 import com.whichlicense.metadata.model.Sink;
-import com.whichlicense.metadata.model.configuration.ReadableKeyedConfiguration;
 
 public interface MetadataSource<S, A extends Metadata> {
-    Sink<? super A> source(S source, ReadableKeyedConfiguration configuration);
+    Sink<? super A> source(S source);
 }

@@ -8,7 +8,6 @@
 module whichlicense.model {
     exports com.whichlicense.metadata.model;
     exports com.whichlicense.metadata.model.algebra;
-    exports com.whichlicense.metadata.model.configuration;
     exports com.whichlicense.metadata.model.exporter;
     exports com.whichlicense.metadata.model.extractor;
     exports com.whichlicense.metadata.model.storage;
