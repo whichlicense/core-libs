@@ -6,6 +6,7 @@
  */
 
 module whichlicense.model {
+    requires configuration.configuration;
     exports com.whichlicense.metadata.model;
     exports com.whichlicense.metadata.model.algebra;
     exports com.whichlicense.metadata.model.exporter;

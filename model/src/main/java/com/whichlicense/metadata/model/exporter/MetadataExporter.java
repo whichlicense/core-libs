@@ -6,9 +6,10 @@
  */
 package com.whichlicense.metadata.model.exporter;
 
+import com.whichlicense.configuration.ReadableKeyedConfiguration;
 import com.whichlicense.metadata.model.Metadata;
 import com.whichlicense.metadata.model.algebra.MetadataSink;
 
 public interface MetadataExporter<T, A extends Metadata & MetadataExporter<T, A>> extends MetadataSink<A> {
-    T export();
+    T export(ReadableKeyedConfiguration configuration);
 }
