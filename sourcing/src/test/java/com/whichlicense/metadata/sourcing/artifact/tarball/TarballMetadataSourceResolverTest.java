@@ -6,6 +6,8 @@
  */
 package com.whichlicense.metadata.sourcing.artifact.tarball;
 
+import com.whichlicense.configuration.KeyedConfiguration;
+import com.whichlicense.metadata.sourcing.ConfigurationMock;
 import com.whichlicense.metadata.sourcing.MetadataOrigin.RawPath;
 import com.whichlicense.metadata.sourcing.MetadataSourceResolver;
 import com.whichlicense.testing.fileref.FileReferenceSource;
@@ -20,45 +22,46 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class TarballMetadataSourceResolverTest {
     static final MetadataSourceResolver RESOLVER = new TarballMetadataSourceResolver(null);
+    static final KeyedConfiguration CONFIG = new ConfigurationMock();
 
     @ParameterizedTest
     @FileReferenceSource(path = "/some.tgz")
     void givenTarballMetadataSourceResolverWhenCallingHandlesWithTarballFilePathThenTrueShouldBeReturned(Path path) {
-        assertThat(RESOLVER.handles(path)).isTrue();
+        assertThat(RESOLVER.handles(path, CONFIG)).isTrue();
     }
 
     @ParameterizedTest
     @FileReferenceSource(path = "/some.zip")
     void givenTarballMetadataSourceResolverWhenCallingHandlesWithNonTarballFilePathThenFalseShouldBeReturned(Path path) {
-        assertThat(RESOLVER.handles(path)).isFalse();
+        assertThat(RESOLVER.handles(path, CONFIG)).isFalse();
     }
 
     @ParameterizedTest
     @FileReferenceSource(path = "/example")
     void givenTarballMetadataSourceResolverWhenCallingHandlesWithDirectoryPathThenFalseShouldBeReturned(Path path) {
-        assertThat(RESOLVER.handles(path)).isFalse();
+        assertThat(RESOLVER.handles(path, CONFIG)).isFalse();
     }
 
     @Test
     void givenTarballMetadataSourceResolverWhenCallingHandlesWithTarballUrlThenTrueShouldBeReturned() throws MalformedURLException {
-        assertThat(RESOLVER.handles(new URL("https://example.com/some.tgz"))).isTrue();
+        assertThat(RESOLVER.handles(new URL("https://example.com/some.tgz"), CONFIG)).isTrue();
     }
 
     @Test
     void givenTarballMetadataSourceResolverWhenCallingHandlesWithNonTarballUrlThenFalseShouldBeReturned() throws MalformedURLException {
-        assertThat(RESOLVER.handles(new URL("https://example.com/some"))).isFalse();
-        assertThat(RESOLVER.handles(new URL("https://example.com/some.zip"))).isFalse();
+        assertThat(RESOLVER.handles(new URL("https://example.com/some"), CONFIG)).isFalse();
+        assertThat(RESOLVER.handles(new URL("https://example.com/some.zip"), CONFIG)).isFalse();
     }
 
     @ParameterizedTest
     @FileReferenceSource(path = "/some.tgz")
     void givenTarballMetadataSourceResolverWhenCallingHandleWithTarballFilePathWithTgzExtensionThenTarballMetadataOriginShouldBeReturned(Path path) {
-        assertThat(RESOLVER.handle(path)).extracting("origin").isEqualTo(new RawPath(path));
+        assertThat(RESOLVER.handle(path, CONFIG)).extracting("origin").isEqualTo(new RawPath(path));
     }
 
     @ParameterizedTest
     @FileReferenceSource(path = "/some.tar.gz")
     void givenTarballMetadataSourceResolverWhenCallingHandleWithTarballFilePathWithTarGzExtensionThenTarballMetadataOriginShouldBeReturned(Path path) {
-        assertThat(RESOLVER.handle(path)).extracting("origin").isEqualTo(new RawPath(path));
+        assertThat(RESOLVER.handle(path, CONFIG)).extracting("origin").isEqualTo(new RawPath(path));
     }
 }

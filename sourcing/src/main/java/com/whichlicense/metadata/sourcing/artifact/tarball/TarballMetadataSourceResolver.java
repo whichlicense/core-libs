@@ -6,6 +6,7 @@
  */
 package com.whichlicense.metadata.sourcing.artifact.tarball;
 
+import com.whichlicense.configuration.ReadableKeyedConfiguration;
 import com.whichlicense.metadata.sourcing.MetadataOrigin.RawPath;
 import com.whichlicense.metadata.sourcing.MetadataOrigin.RawURL;
 import com.whichlicense.metadata.sourcing.MetadataSource;
@@ -26,22 +27,22 @@ public record TarballMetadataSourceResolver(MetadataSourceResolver next) impleme
     }
 
     @Override
-    public boolean handles(Path path) {
+    public boolean handles(Path path, ReadableKeyedConfiguration configuration) {
         return Files.isRegularFile(path) && (path.toFile().getName().endsWith(".tgz") || path.toFile().getName().endsWith(".tar.gz"));
     }
 
     @Override
-    public boolean handles(URL url) {
+    public boolean handles(URL url, ReadableKeyedConfiguration configuration) {
         return url.toString().endsWith(".tgz") || url.toString().endsWith(".tar.gz");
     }
 
     @Override
-    public MetadataSource handle(Path path) {
+    public MetadataSource handle(Path path, ReadableKeyedConfiguration configuration) {
         return new TarballMetadataSource(ArchiveHelper.resolveRoot(path, archiveStream()), new RawPath(path));
     }
 
     @Override
-    public MetadataSource handle(URL url) {
+    public MetadataSource handle(URL url, ReadableKeyedConfiguration configuration) {
         return new TarballMetadataSource(ArchiveHelper.resolveRoot(url, archiveStream()), new RawURL(url));
     }
 }

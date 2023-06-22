@@ -6,6 +6,8 @@
  */
 package com.whichlicense.metadata.sourcing.artifact.zip;
 
+import com.whichlicense.configuration.KeyedConfiguration;
+import com.whichlicense.metadata.sourcing.ConfigurationMock;
 import com.whichlicense.metadata.sourcing.MetadataOrigin.RawPath;
 import com.whichlicense.metadata.sourcing.MetadataSourceResolver;
 import com.whichlicense.testing.fileref.FileReferenceSource;
@@ -20,44 +22,45 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ZipMetadataSourceResolverTest {
     static final MetadataSourceResolver RESOLVER = new ZipMetadataSourceResolver(null);
+    static final KeyedConfiguration CONFIG = new ConfigurationMock();
 
     @ParameterizedTest
     @FileReferenceSource(path = "/some.zip")
     void givenZipMetadataSourceResolverWhenCallingHandlesWithZipFilePathThenTrueShouldBeReturned(Path path) {
-        assertThat(RESOLVER.handles(path)).isTrue();
+        assertThat(RESOLVER.handles(path, CONFIG)).isTrue();
     }
 
     @ParameterizedTest
     @FileReferenceSource(path = "/some.jar")
     void givenZipMetadataSourceResolverWhenCallingHandlesWithNonZipFilePathThenFalseShouldBeReturned(Path path) {
-        assertThat(RESOLVER.handles(path)).isFalse();
+        assertThat(RESOLVER.handles(path, CONFIG)).isFalse();
     }
 
     @ParameterizedTest
     @FileReferenceSource(path = "/example")
     void givenZipMetadataSourceResolverWhenCallingHandlesWithDirectoryPathThenFalseShouldBeReturned(Path path) {
-        assertThat(RESOLVER.handles(path)).isFalse();
+        assertThat(RESOLVER.handles(path, CONFIG)).isFalse();
     }
 
     @Test
     void givenZipMetadataSourceResolverWhenCallingHandlesWithZipUrlThenTrueShouldBeReturned() throws MalformedURLException {
-        assertThat(RESOLVER.handles(new URL("https://example.com/some.zip"))).isTrue();
+        assertThat(RESOLVER.handles(new URL("https://example.com/some.zip"), CONFIG)).isTrue();
     }
 
     @Test
     void givenZipMetadataSourceResolverWhenCallingHandlesWithNonZipUrlThenFalseShouldBeReturned() throws MalformedURLException {
-        assertThat(RESOLVER.handles(new URL("https://example.com/some"))).isFalse();
-        assertThat(RESOLVER.handles(new URL("https://example.com/some.jar"))).isFalse();
+        assertThat(RESOLVER.handles(new URL("https://example.com/some"), CONFIG)).isFalse();
+        assertThat(RESOLVER.handles(new URL("https://example.com/some.jar"), CONFIG)).isFalse();
     }
 
     @Test
     void givenZipMetadataSourceResolverWhenCallingHandlesWithTopLevelZipDomainBasedUrlThenFalseShouldBeReturned() throws MalformedURLException {
-        assertThat(RESOLVER.handles(new URL("https://example.zip"))).isFalse();
+        assertThat(RESOLVER.handles(new URL("https://example.zip"), CONFIG)).isFalse();
     }
 
     @ParameterizedTest
     @FileReferenceSource(path = "/some.zip")
     void givenZipMetadataSourceResolverWhenCallingHandleWithZipFilePathThenZipMetadataOriginShouldBeReturned(Path path) {
-        assertThat(RESOLVER.handle(path)).extracting("origin").isEqualTo(new RawPath(path));
+        assertThat(RESOLVER.handle(path, CONFIG)).extracting("origin").isEqualTo(new RawPath(path));
     }
 }

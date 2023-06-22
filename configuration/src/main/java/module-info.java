@@ -5,6 +5,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-module configuration.configuration {
+module whichlicense.configuration {
     exports com.whichlicense.configuration;
 }

@@ -6,6 +6,7 @@
  */
 package com.whichlicense.metadata.sourcing;
 
+import com.whichlicense.configuration.KeyedConfiguration;
 import com.whichlicense.metadata.sourcing.artifact.zip.ZipMetadataSource;
 import com.whichlicense.metadata.sourcing.repository.local.LocalMetadataRepositorySource;
 import org.junit.jupiter.api.Test;
@@ -24,22 +25,24 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MetadataSourceResolverTest {
+    static final KeyedConfiguration CONFIG = new ConfigurationMock();
+
     @Test
     void givenMetadataSourceResolverWhenCallingHandlesWithPathThenFalseShouldBeReturned(@Mock MetadataSourceResolver resolver) {
-        when(resolver.handles((Path) null)).thenReturn(false);
-        assertThat(resolver.handles((Path) null)).isFalse();
+        when(resolver.handles((Path) null, CONFIG)).thenReturn(false);
+        assertThat(resolver.handles((Path) null, CONFIG)).isFalse();
     }
 
     @Test
     void givenMetadataSourceResolverWhenCallingHandlesWithUrlThenFalseShouldBeReturned(@Mock MetadataSourceResolver resolver) {
-        when(resolver.handles((URL) null)).thenReturn(false);
-        assertThat(resolver.handles((URL) null)).isFalse();
+        when(resolver.handles((URL) null, CONFIG)).thenReturn(false);
+        assertThat(resolver.handles((URL) null, CONFIG)).isFalse();
     }
 
     @Test
     void givenMetadataSourceResolverWhenCallingHandleWithPathThenThrowUnsupportedOperationException(@Mock MetadataSourceResolver resolver) {
-        when(resolver.handle((Path) null)).thenCallRealMethod();
-        assertThatThrownBy(() -> resolver.handle((Path) null))
+        when(resolver.handle((Path) null, CONFIG)).thenCallRealMethod();
+        assertThatThrownBy(() -> resolver.handle((Path) null, CONFIG))
                 .isExactlyInstanceOf(UnsupportedOperationException.class)
                 .hasMessageStartingWith("Unsupported null for com.whichlicense."
                         + "metadata.sourcing.MetadataSourceResolver$MockitoMock");
@@ -47,8 +50,8 @@ class MetadataSourceResolverTest {
 
     @Test
     void givenMetadataSourceResolverWhenCallingHandleWithUrlThenThrowUnsupportedOperationException(@Mock MetadataSourceResolver resolver) {
-        when(resolver.handle((URL) null)).thenCallRealMethod();
-        assertThatThrownBy(() -> resolver.handle((URL) null))
+        when(resolver.handle((URL) null, CONFIG)).thenCallRealMethod();
+        assertThatThrownBy(() -> resolver.handle((URL) null, CONFIG))
                 .isExactlyInstanceOf(UnsupportedOperationException.class)
                 .hasMessageStartingWith("Unsupported null for com.whichlicense."
                         + "metadata.sourcing.MetadataSourceResolver$MockitoMock");
@@ -58,22 +61,22 @@ class MetadataSourceResolverTest {
     void givenMetadataSourceResolverThatDoesNotHandlePathWhenCallingResolveWithPathThenOptionalEmptyShouldBeReturned(@Mock MetadataSourceResolver resolver) {
         var example = Paths.get("example");
 
-        when(resolver.handles(example)).thenReturn(false);
-        when(resolver.resolve(example)).thenCallRealMethod();
+        when(resolver.handles(example, CONFIG)).thenReturn(false);
+        when(resolver.resolve(example, CONFIG)).thenCallRealMethod();
 
         assertThat(resolver.next()).isNull();
-        assertThat(resolver.resolve(example)).isEmpty();
+        assertThat(resolver.resolve(example, CONFIG)).isEmpty();
     }
 
     @Test
     void givenMetadataSourceResolverThatDoesNotHandleUrlWhenCallingResolveWithUrlThenOptionalEmptyShouldBeReturned(@Mock MetadataSourceResolver resolver) throws MalformedURLException {
         var example = new URL("https://example.com");
 
-        when(resolver.handles(example)).thenReturn(false);
-        when(resolver.resolve(example)).thenCallRealMethod();
+        when(resolver.handles(example, CONFIG)).thenReturn(false);
+        when(resolver.resolve(example, CONFIG)).thenCallRealMethod();
 
         assertThat(resolver.next()).isNull();
-        assertThat(resolver.resolve(example)).isEmpty();
+        assertThat(resolver.resolve(example, CONFIG)).isEmpty();
     }
 
     @Test
@@ -81,10 +84,10 @@ class MetadataSourceResolverTest {
         var example = "example";
 
         //when(resolver.handles(Paths.get(example))).thenReturn(false);
-        when(resolver.resolve(example)).thenCallRealMethod();
+        when(resolver.resolve(example, CONFIG)).thenCallRealMethod();
 
         assertThat(resolver.next()).isNull();
-        assertThat(resolver.resolve(example)).isEmpty();
+        assertThat(resolver.resolve(example, CONFIG)).isEmpty();
     }
 
     @Test
@@ -93,15 +96,15 @@ class MetadataSourceResolverTest {
         var source = new LocalMetadataRepositorySource(example);
 
         when(first.next()).thenReturn(second);
-        when(first.handles(example)).thenReturn(false);
-        when(first.resolve(example)).thenCallRealMethod();
-        when(second.handles(example)).thenReturn(true);
-        when(second.handle(example)).thenReturn(source);
-        when(second.resolve(example)).thenCallRealMethod();
+        when(first.handles(example, CONFIG)).thenReturn(false);
+        when(first.resolve(example, CONFIG)).thenCallRealMethod();
+        when(second.handles(example, CONFIG)).thenReturn(true);
+        when(second.handle(example, CONFIG)).thenReturn(source);
+        when(second.resolve(example, CONFIG)).thenCallRealMethod();
 
         assertThat(first.next()).isEqualTo(second);
-        assertThat(first.resolve(example)).contains(source);
-        verify(second, times(1)).handles(example);
+        assertThat(first.resolve(example, CONFIG)).contains(source);
+        verify(second, times(1)).handles(example, CONFIG);
     }
 
     @Test
@@ -111,15 +114,15 @@ class MetadataSourceResolverTest {
         var origin = new MetadataOrigin.RawURL(example);
 
         when(first.next()).thenReturn(second);
-        when(first.handles(example)).thenReturn(false);
-        when(first.resolve(example)).thenCallRealMethod();
-        when(second.handles(example)).thenReturn(true);
-        when(second.handle(example)).thenReturn(new ZipMetadataSource(source, origin));
-        when(second.resolve(example)).thenCallRealMethod();
+        when(first.handles(example, CONFIG)).thenReturn(false);
+        when(first.resolve(example, CONFIG)).thenCallRealMethod();
+        when(second.handles(example, CONFIG)).thenReturn(true);
+        when(second.handle(example, CONFIG)).thenReturn(new ZipMetadataSource(source, origin));
+        when(second.resolve(example, CONFIG)).thenCallRealMethod();
 
         assertThat(first.next()).isEqualTo(second);
-        assertThat(first.resolve(example)).get()
+        assertThat(first.resolve(example, CONFIG)).get()
                 .extracting("origin").isEqualTo(origin);
-        verify(second, times(1)).handles(example);
+        verify(second, times(1)).handles(example, CONFIG);
     }
 }

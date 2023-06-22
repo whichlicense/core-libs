@@ -6,6 +6,7 @@
  */
 package com.whichlicense.metadata.sourcing.repository.local;
 
+import com.whichlicense.configuration.ReadableKeyedConfiguration;
 import com.whichlicense.metadata.sourcing.MetadataSource;
 import com.whichlicense.metadata.sourcing.MetadataSourceResolver;
 
@@ -14,12 +15,12 @@ import java.nio.file.Path;
 
 public record LocalMetadataRepositorySourceResolver(MetadataSourceResolver next) implements MetadataSourceResolver {
     @Override
-    public boolean handles(Path path) {
+    public boolean handles(Path path, ReadableKeyedConfiguration configuration) {
         return Files.isDirectory(path);
     }
 
     @Override
-    public MetadataSource handle(Path path) {
+    public MetadataSource handle(Path path, ReadableKeyedConfiguration configuration) {
         return new LocalMetadataRepositorySource(path);
     }
 }

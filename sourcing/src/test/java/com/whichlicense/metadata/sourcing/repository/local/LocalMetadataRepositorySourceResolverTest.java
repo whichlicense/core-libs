@@ -6,6 +6,8 @@
  */
 package com.whichlicense.metadata.sourcing.repository.local;
 
+import com.whichlicense.configuration.KeyedConfiguration;
+import com.whichlicense.metadata.sourcing.ConfigurationMock;
 import com.whichlicense.metadata.sourcing.MetadataOrigin.RawPath;
 import com.whichlicense.metadata.sourcing.MetadataSourceResolver;
 import com.whichlicense.testing.fileref.FileReferenceSource;
@@ -17,22 +19,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class LocalMetadataRepositorySourceResolverTest {
     static final MetadataSourceResolver RESOLVER = new LocalMetadataRepositorySourceResolver(null);
+    static final KeyedConfiguration CONFIG = new ConfigurationMock();
 
     @ParameterizedTest
     @FileReferenceSource(path = "/example")
     void givenLocalMetadataRepositorySourceResolverWhenCallingHandlesWithDirectoryPathThenTrueShouldBeReturned(Path path) {
-        assertThat(RESOLVER.handles(path)).isTrue();
+        assertThat(RESOLVER.handles(path, CONFIG)).isTrue();
     }
 
     @ParameterizedTest
     @FileReferenceSource(path = "/some.zip")
     void givenLocalMetadataRepositorySourceResolverWhenCallingHandlesWithFilePathThenFalseShouldBeReturned(Path path) {
-        assertThat(RESOLVER.handles(path)).isFalse();
+        assertThat(RESOLVER.handles(path, CONFIG)).isFalse();
     }
 
     @ParameterizedTest
     @FileReferenceSource(path = "/example")
     void givenLocalMetadataRepositorySourceResolverWhenCallingHandleWithDirectoryPathThenLocalMetadataRepositorySourceShouldBeReturned(Path path) {
-        assertThat(RESOLVER.handle(path)).extracting("origin").isEqualTo(new RawPath(path));
+        assertThat(RESOLVER.handle(path, CONFIG)).extracting("origin").isEqualTo(new RawPath(path));
     }
 }

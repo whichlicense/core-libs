@@ -14,6 +14,7 @@ import com.whichlicense.metadata.sourcing.repository.local.LocalMetadataReposito
 module whichlicense.sourcing {
     requires java.logging;
     requires org.apache.commons.compress;
+    requires configuration.configuration;
     exports com.whichlicense.metadata.sourcing;
     exports com.whichlicense.metadata.sourcing.artifact;
     exports com.whichlicense.metadata.sourcing.repository;

@@ -6,6 +6,7 @@
  */
 package com.whichlicense.metadata.sourcing.artifact.jar;
 
+import com.whichlicense.configuration.ReadableKeyedConfiguration;
 import com.whichlicense.metadata.sourcing.MetadataOrigin.RawPath;
 import com.whichlicense.metadata.sourcing.MetadataOrigin.RawURL;
 import com.whichlicense.metadata.sourcing.MetadataSource;
@@ -18,22 +19,22 @@ import java.nio.file.Path;
 
 public record JarMetadataSourceResolver(MetadataSourceResolver next) implements MetadataSourceResolver {
     @Override
-    public boolean handles(Path path) {
+    public boolean handles(Path path, ReadableKeyedConfiguration configuration) {
         return Files.isRegularFile(path) && path.toFile().getName().endsWith(".jar");
     }
 
     @Override
-    public boolean handles(URL url) {
+    public boolean handles(URL url, ReadableKeyedConfiguration configuration) {
         return url.toString().endsWith(".jar");
     }
 
     @Override
-    public MetadataSource handle(Path path) {
+    public MetadataSource handle(Path path, ReadableKeyedConfiguration configuration) {
         return new JarMetadataSource(ArchiveHelper.resolveRoot(path), new RawPath(path));
     }
 
     @Override
-    public MetadataSource handle(URL url) {
+    public MetadataSource handle(URL url, ReadableKeyedConfiguration configuration) {
         return new JarMetadataSource(ArchiveHelper.resolveRoot(url), new RawURL(url));
     }
 }
