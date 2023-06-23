@@ -6,12 +6,16 @@
  */
 package com.whichlicense.metadata.identification.license;
 
-import java.util.Set;
+import java.util.Map;
 
 public interface LicenseIdentificationPipelineStepTrace {
     long step();
 
-    Set<LicenseMatch> matches();
+    String operation();
+
+    Map<String, Object> parameters();
+
+    Map<String, Float> matches();
 
     boolean terminated();
 }

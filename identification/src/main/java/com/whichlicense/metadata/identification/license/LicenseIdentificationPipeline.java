@@ -9,8 +9,8 @@ package com.whichlicense.metadata.identification.license;
 import com.whichlicense.metadata.identification.license.internal.LazyLicenseIdentificationPipelineHolder;
 import com.whichlicense.metadata.identification.license.pipeline.PipelineStep;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -21,38 +21,41 @@ public interface LicenseIdentificationPipeline {
                 .findFirst().orElseThrow();
     }
 
-    static List<LicenseIdentificationPipelineStepTrace> identifyLicenses(String algorithm, List<PipelineStep> steps, float threshold, String license) {
-        return lookup(algorithm).identifyLicenses(steps, threshold, license);
+    static LicenseIdentificationPipelineTrace identifyLicenses(String name, String algorithm, List<PipelineStep> steps, float threshold, String license) {
+        return lookup(algorithm).identifyLicenses(name, steps, threshold, license);
     }
 
-    static List<LicenseIdentificationPipelineStepTrace> identifyLicenses(String algorithm, List<PipelineStep> steps, String license) {
-        return lookup(algorithm).identifyLicenses(steps, license);
+    static LicenseIdentificationPipelineTrace identifyLicenses(String name, String algorithm, List<PipelineStep> steps, String license) {
+        return lookup(algorithm).identifyLicenses(name, steps, license);
     }
 
-    static Optional<LicenseMatch> identifyLicense(String algorithm, List<PipelineStep> steps, float threshold, String license) {
-        return lookup(algorithm).identifyLicense(steps, threshold, license);
+    static Optional<LicenseMatch> identifyLicense(String name, String algorithm, List<PipelineStep> steps, float threshold, String license) {
+        return lookup(algorithm).identifyLicense(name, steps, threshold, license);
     }
 
-    static Optional<LicenseMatch> identifyLicense(String algorithm, List<PipelineStep> steps, String license) {
-        return lookup(algorithm).identifyLicense(steps, license);
+    static Optional<LicenseMatch> identifyLicense(String name, String algorithm, List<PipelineStep> steps, String license) {
+        return lookup(algorithm).identifyLicense(name, steps, license);
     }
 
-    List<LicenseIdentificationPipelineStepTrace> identifyLicenses(List<PipelineStep> steps, float threshold, String license);
+    LicenseIdentificationPipelineTrace identifyLicenses(String name, List<PipelineStep> steps, float threshold, String license);
 
-    default List<LicenseIdentificationPipelineStepTrace> identifyLicenses(List<PipelineStep> steps, String license) {
-        return this.identifyLicenses(steps, 100, license);
+    default LicenseIdentificationPipelineTrace identifyLicenses(String name, List<PipelineStep> steps, String license) {
+        return this.identifyLicenses(name, steps, 100, license);
     }
 
-    default Optional<LicenseMatch> identifyLicense(List<PipelineStep> steps, float threshold, String license) {
-        return identifyLicenses(steps, threshold, license).stream()
-                .reduce((first, second) -> second)
-                .map(LicenseIdentificationPipelineStepTrace::matches)
-                .stream().flatMap(Collection::stream)
-                .findFirst();
+    default Optional<LicenseMatch> identifyLicense(String name, List<PipelineStep> steps, float threshold, String license) {
+        record LicenseIdentificationPipelineMatch(String license, float confidence, String algorithm,
+                                                  Map<String, Object> parameters) implements LicenseMatch {
+        }
+
+        var trace = identifyLicenses(name, steps, threshold, license);
+        return Optional.ofNullable(trace.license())
+                .map(l -> new LicenseIdentificationPipelineMatch(l, trace.confidence(),
+                        trace.algorithm(), trace.parameters()));
     }
 
-    default Optional<LicenseMatch> identifyLicense(List<PipelineStep> steps, String license) {
-        return identifyLicense(steps, 100, license);
+    default Optional<LicenseMatch> identifyLicense(String name, List<PipelineStep> steps, String license) {
+        return identifyLicense(name, steps, 100, license);
     }
 
     String algorithm();
