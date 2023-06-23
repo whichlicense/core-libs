@@ -9,7 +9,7 @@ import com.whichlicense.metadata.identification.license.LicenseHasher;
 import com.whichlicense.metadata.identification.license.LicenseIdentificationPipeline;
 import com.whichlicense.metadata.identification.license.LicenseIdentifier;
 
-module whichlicense.identification.license {
+open module whichlicense.identification.license {
     exports com.whichlicense.metadata.identification.license;
     exports com.whichlicense.metadata.identification.license.internal to whichlicense.cli, whichlicense.identification.license.panama, whichlicense.identification.license.wasm;
     exports com.whichlicense.metadata.identification.license.jmh to whichlicense.identification.license.panama, whichlicense.identification.license.wasm, whichlicense.identification.license.jmh;
