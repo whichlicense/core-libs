@@ -8,7 +8,7 @@ package com.whichlicense.metadata.identification.license;
 
 import java.util.Map;
 
-public interface LicenseMatch {
+public interface LicenseMatch extends Comparable<LicenseMatch> {
     String license();
 
     float confidence();
@@ -16,4 +16,9 @@ public interface LicenseMatch {
     String algorithm();
 
     Map<String, Object> parameters();
+
+    @Override
+    default int compareTo(LicenseMatch other) {
+        return Float.compare(other.confidence(), confidence());
+    }
 }

@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2023 - for information on the respective copyright owner
+ * see the NOTICE file and/or the repository https://github.com/whichlicense/core-libs.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
 package com.whichlicense.metadata.identification.license;
 
 import com.whichlicense.metadata.identification.license.internal.LicenseIdentificationPipelineStepTraceImpl;
@@ -7,8 +13,6 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.Collections.emptyList;
-import static java.util.Map.entry;
-import static java.util.stream.Collectors.toUnmodifiableMap;
 
 public record LicenseIdentificationPipelineTrace(String name, String license, float confidence, String algorithm, Map<String, Object> parameters, List<LicenseIdentificationPipelineStepTrace> traces) {
     public static LicenseIdentificationPipelineTrace empty(String name, String algorithm, Map<String, Object> parameters) {
@@ -19,13 +23,10 @@ public record LicenseIdentificationPipelineTrace(String name, String license, fl
         if (matches.isEmpty()) return empty("automatic-unary-pipeline", algorithm, parameters);
         var match = matches.stream().findFirst().orElseThrow();
 
-        var matchMap = matches.stream().map(m -> entry(m.license(), m.confidence()))
-                .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue, (f, s) -> s));
-
         return new LicenseIdentificationPipelineTrace("automatic-unary-pipeline", match.license(),
                 match.confidence(), algorithm, parameters, List.of(
-                        new LicenseIdentificationPipelineStepTraceImpl(1L,algorithm + "-identification",
-                                algorithm, parameters, matchMap, true)
+                        new LicenseIdentificationPipelineStepTraceImpl(1L,
+                                algorithm + "-identification", algorithm, parameters, matches)
         ));
     }
 }
