@@ -17,7 +17,7 @@ public record LicenseIdentificationPipelineTrace(String name, String license, fl
         if (matches.isEmpty()) return empty("automatic-unary-pipeline", algorithm, parameters);
         var match = matches.stream().findFirst().orElseThrow();
 
-        record UnaryLicenseIdentificationPipelineStepTrace(String algorithm, Map<String, Object> parameters, Set<LicenseMatch> matches) implements LicenseIdentificationPipelineStepTrace {
+        record UnaryLicenseIdentificationPipelineStepTrace(String algorithm, Map<String, Object> parameters, Set<LicenseMatch> matchSet) implements LicenseIdentificationPipelineStepTrace {
 
             @Override
             public long step() {
@@ -36,7 +36,7 @@ public record LicenseIdentificationPipelineTrace(String name, String license, fl
 
             @Override
             public Map<String, Float> matches() {
-                return matches.stream().map(m -> entry(m.license(), m.confidence()))
+                return matchSet.stream().map(m -> entry(m.license(), m.confidence()))
                         .collect(toUnmodifiableMap(Map.Entry::getKey, Map.Entry::getValue, (f, s) -> s));
             }
 
