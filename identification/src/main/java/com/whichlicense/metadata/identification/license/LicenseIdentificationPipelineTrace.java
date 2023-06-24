@@ -14,19 +14,19 @@ import java.util.Set;
 
 import static java.util.Collections.emptyList;
 
-public record LicenseIdentificationPipelineTrace(String name, String license, float confidence, String algorithm, Map<String, Object> parameters, List<LicenseIdentificationPipelineStepTrace> traces) {
-    public static LicenseIdentificationPipelineTrace empty(String name, String algorithm, Map<String, Object> parameters) {
-        return new LicenseIdentificationPipelineTrace(name, null, 0f, algorithm, parameters, emptyList());
+public record LicenseIdentificationPipelineTrace(String name, String license, float confidence, String algorithm, Map<String, Object> parameters, List<LicenseIdentificationPipelineStepTrace> traces, String input) {
+    public static LicenseIdentificationPipelineTrace empty(String name, String algorithm, Map<String, Object> parameters, String input) {
+        return new LicenseIdentificationPipelineTrace(name, null, 0f, algorithm, parameters, emptyList(), input);
     }
 
-    public static LicenseIdentificationPipelineTrace ofMatchSet(String algorithm, Map<String, Object> parameters, Set<LicenseMatch> matches) {
-        if (matches.isEmpty()) return empty("automatic-unary-pipeline", algorithm, parameters);
+    public static LicenseIdentificationPipelineTrace ofMatchSet(String algorithm, Map<String, Object> parameters, Set<LicenseMatch> matches, String input) {
+        if (matches.isEmpty()) return empty("automatic-unary-pipeline", algorithm, parameters, input);
         var match = matches.stream().findFirst().orElseThrow();
 
         return new LicenseIdentificationPipelineTrace("automatic-unary-pipeline", match.license(),
                 match.confidence(), algorithm, parameters, List.of(
                         new LicenseIdentificationPipelineStepTraceImpl(1L,
                                 algorithm + "-identification", algorithm, parameters, matches)
-        ));
+        ), input);
     }
 }
