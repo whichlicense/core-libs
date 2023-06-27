@@ -14,22 +14,21 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
-import java.util.regex.Pattern;
 
 public sealed interface PipelineStep {
-    static Remove remove(Pattern pattern) {
+    static Remove removePattern(String pattern) {
         return new Remove(new Regex(pattern));
     }
 
-    static Remove remove(String string) {
+    static Remove removeText(String string) {
         return new Remove(new Text(string));
     }
 
-    static Replace replace(Pattern pattern, String replacement) {
+    static Replace replacePattern(String pattern, String replacement) {
         return new Replace(new Regex(pattern), replacement);
     }
 
-    static Replace replace(String target, String replacement) {
+    static Replace replaceText(String target, String replacement) {
         return new Replace(new Text(target), replacement);
     }
 

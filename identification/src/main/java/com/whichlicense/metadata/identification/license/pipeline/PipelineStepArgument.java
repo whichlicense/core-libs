@@ -7,10 +7,9 @@
 package com.whichlicense.metadata.identification.license.pipeline;
 
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 public sealed interface PipelineStepArgument {
-    record Regex(Pattern pattern) implements PipelineStepArgument {
+    record Regex(String pattern) implements PipelineStepArgument {
         public Regex {
             Objects.requireNonNull(pattern);
         }
