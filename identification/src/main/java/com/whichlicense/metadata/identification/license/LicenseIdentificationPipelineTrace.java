@@ -25,7 +25,7 @@ public record LicenseIdentificationPipelineTrace(String name, String license, fl
 
         return new LicenseIdentificationPipelineTrace("automatic-unary-pipeline", match.license(),
                 match.confidence(), algorithm, parameters, List.of(
-                        new LicenseIdentificationPipelineStepTraceImpl(1L,
+                        new LicenseIdentificationPipelineStepTraceImpl(0L,
                                 algorithm + "-identification", algorithm, parameters, matches)
         ), input);
     }
