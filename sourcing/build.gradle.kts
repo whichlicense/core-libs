@@ -35,7 +35,7 @@ configurations.all {
 dependencies {
     api("org.apache.commons:commons-compress:1.23.0")
     api("com.whichlicense:configuration:0.7.8-SNAPSHOT")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
     testImplementation("org.mockito:mockito-subclass:5.4.0")
     testImplementation("org.mockito:mockito-junit-jupiter:5.4.0")
